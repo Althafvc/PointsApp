@@ -1,14 +1,16 @@
-import { View, Text } from 'react-native'
-import React from 'react'
 import { Stack } from "expo-router";
 import "../global.css";
 
 const RootLayout = () => {
-  return (
-    <Stack>
-        <Stack.Screen name='index' options={{headerShown: false}}/>
-    </Stack>
-  )
-}
 
-export default RootLayout
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="NumberAdding" options={{ headerShown: false }} />
+      <Stack.Screen name="OTP" options={{ headerShown: false }} />
+      <Stack.Screen name="home" options={{ headerShown: false }} />
+    </Stack>
+  );
+};
+
+export default RootLayout;

@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
-import { View, Text, Pressable, Image } from 'react-native';
+import React, {useState } from 'react';
+import { View, Text, Pressable, Image,} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { hp, wp } from '../helpers/Common';
+import { useRouter } from 'expo-router';
+import Animated, { FadeInDown } from "react-native-reanimated";
+
 
 const Index = () => {
-  const [selectedValue, setSelectedvalue] = useState('option1');
+  const [selectedValue, setSelectedvalue] = useState('Select');
+  const router = useRouter()
 
-  console.log(selectedValue);
+  function handleSubmit () {
+    
+    if(selectedValue && selectedValue != 'Select') {
+      router.push('NumberAdding')
+
+    } else {
+      alert('Plese select your language')
+    }
+  }
 
   return (
     <View className="flex-1 bg-[rgba(25,27,39,1)]">
@@ -19,18 +31,18 @@ const Index = () => {
       >
         {/* Text Section */}
         <View className="flex justify-center gap-4" style={{marginTop:hp(2)}}>
-          <Text className="text-[#161616] font-bold" style={{ fontSize: hp(3.2), letterSpacing:0.5}}>
+          <Animated.Text entering={FadeInDown.delay(300).springify()} className="text-[#161616] font-bold" style={{ fontSize: hp(3.2), letterSpacing:0.5}}>
             Select your language
-          </Text>
-          <Text className="text-[#484848]" style={{ fontSize: hp(2), letterSpacing:1}}>
+          </Animated.Text>
+          <Animated.Text entering={FadeInDown.delay(400).springify()} className="text-[#484848]" style={{ fontSize: hp(2), letterSpacing:1}}>
             We would love to deliver an experience in your preferred language.
-          </Text>
+          </Animated.Text>
         </View>
 
         {/* Dropdown */}
-        <View
+        <Animated.View entering={FadeInDown.delay(500).springify()}
           className="mt-4 border rounded-lg overflow-hidden"
-          style={{ borderColor: 'rgb(215,215,215)', borderWidth: 1 }}
+          style={{ borderColor: 'rgb(215,215,215)', borderWidth: 1, width:wp(90) }}
         >
           <Picker
             selectedValue={selectedValue}
@@ -43,15 +55,16 @@ const Index = () => {
             <Picker.Item label="English" value="English" />
             <Picker.Item label="Arabic" value="Arabic" />
           </Picker>
-        </View>
+        </Animated.View>
 
         {/* Button */}
 
-        <View className='w-full flex justify-center items-center' style={{height:hp(7)}}>
-          <Pressable className='w-full flex justify-center items-center rounded-md' style={{backgroundColor:'rgb(39,160,45)', height:hp(6.5)}}>
+        <Animated.View entering={FadeInDown.delay(600).springify()}
+        className='w-full flex justify-center items-center' style={{height:hp(7)}}>
+          <Pressable onPress={handleSubmit} className='w-full flex justify-center items-center rounded-md' style={{backgroundColor:'rgb(39,160,45)', height:hp(6.5), width:wp(90) }}>
           <Text className="text-white font-bold" style={{fontSize:hp(2.3)}}>Continue</Text>
           </Pressable>
-        </View>
+        </Animated.View>
       </View>
     </View>
   );
