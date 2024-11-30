@@ -86,32 +86,36 @@ const NumberScreen = () => {
 
         {/* Phone Number Input with react-hook-form */}
         <Animated.View entering={FadeInDown.delay(500).springify()} className="mt-4 border rounded-lg overflow-hidden" style={{ borderColor: "rgb(215,215,215)", borderWidth: 1 }}>
-          <Controller
-            control={control}
-            name="phone"
-            rules={{
-              required: "phone is required",
-              pattern: {
-                value: /^\+?(\d{1,3})?[-.\s]?(\(?\d{1,4}\)?)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/,
-                message: 'Invalid phone format'
-              }
-          
-            }}
-            render={({ field: { onChange, value } }) => (
-              <TextInput
-                className="bg-gray-100 text-black pl-5"
-                placeholder="Enter your phone number"
-                onChangeText={onChange}
-                value={value}
-                keyboardType="number-pad"
-                maxLength={10}
-                style={{
-                  height: hp(6),
-                  fontSize: hp(2),
-                }}
-              />
-            )}
-          />
+        <Controller
+  control={control}
+  name="phone"
+  rules={{
+    required: "Phone is required",
+    pattern: {
+      value: /^\+?(\d{1,3})?[-.\s]?(\(?\d{1,4}\)?)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/,
+      message: "Invalid phone format",
+    },
+    validate: {
+      length: (value) =>
+        value.replace(/\D/g, "").length === 10 || "Phone number must be 10 digits",
+    },
+  }}
+  render={({ field: { onChange, value } }) => (
+    <TextInput
+      className="bg-gray-100 text-black pl-5"
+      placeholder="Enter your phone number"
+      onChangeText={onChange}
+      value={value}
+      keyboardType="number-pad"
+      maxLength={10}
+      style={{
+        height: hp(6),
+        fontSize: hp(2),
+      }}
+    />
+  )}
+/>
+
           {/* Display error if phone number validation fails */}
         </Animated.View>
           {errors.phone && <Text style={{ color: "red" }}>{errors.phone.message}</Text>}
